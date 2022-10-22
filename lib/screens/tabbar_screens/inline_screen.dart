@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../components/details_card.dart';
 
 class InlineScreen extends StatefulWidget {
-  InlineScreen({Key? key}) : super(key: key);
+  final context;
+  InlineScreen({Key? key, this.context}) : super(key: key);
 
   @override
   State<InlineScreen> createState() => _InlineScreenState();
@@ -23,10 +24,18 @@ class _InlineScreenState extends State<InlineScreen> {
             // height: 200,
             child: Column(
               children: [
-                DetailsCard(),
-                DetailsCard(),
-                DetailsCard(),
-                DetailsCard(),
+                DetailsCard(
+                  ctx: widget.context,
+                ),
+                DetailsCard(
+                  ctx: widget.context,
+                ),
+                DetailsCard(
+                  ctx: widget.context,
+                ),
+                DetailsCard(
+                  ctx: widget.context,
+                ),
               ],
             ),
             decoration: BoxDecoration(

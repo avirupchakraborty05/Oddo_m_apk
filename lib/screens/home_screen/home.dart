@@ -227,7 +227,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: TabBarView(
               controller: tabController,
               children: [
-                InlineScreen(),
+                InlineScreen(
+                  context: context,
+                ),
                 Midline_screen(),
                 FinalScreen(),
                 ReFinal_Screen(),

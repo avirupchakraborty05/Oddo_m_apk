@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:marchant_oddo/screens/progress_page/progress_page.dart';
 
+import '../dragable_form/dragable_page.dart';
 import '../options_screen/option_one_screen.dart';
 import '../reassign_page/reassign_page.dart';
 
 class DetailsCard extends StatefulWidget {
-  DetailsCard({Key? key}) : super(key: key);
+  final ctx;
+  DetailsCard({Key? key, this.ctx});
 
   @override
   State<DetailsCard> createState() => _DetailsCardState();
@@ -12,6 +15,7 @@ class DetailsCard extends StatefulWidget {
 
 class _DetailsCardState extends State<DetailsCard> {
   String _selectedMenu = '';
+  var Menu = ["progress", "reassign", "edit"];
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,37 +60,41 @@ class _DetailsCardState extends State<DetailsCard> {
                 ),
               ),
               Expanded(
-                child: PopupMenuButton<Menu>(
+                child: PopupMenuButton<String>(
                   // Callback that sets the selected popup menu item.
-                  onSelected: (Menu item) {
+                  onSelected: (String item) {
                     setState(() {
-                      _selectedMenu = item.name;
+                      _selectedMenu = item;
                     });
+                    print(item);
+                    if (item == "reassign") {
+                      Navigator.push(widget.ctx,
+                          MaterialPageRoute(builder: (_) => ReassignPage()));
+                    }
+                    if (item == "progress") {
+                      Navigator.push(widget.ctx,
+                          MaterialPageRoute(builder: (_) => ProgressPage()));
+                    }
+                    if (item == "edit") {
+                      Navigator.push(
+                          widget.ctx,
+                          MaterialPageRoute(
+                              builder: (_) => DragableFormPage()));
+                    }
                   },
                   itemBuilder: ((BuildContext context) =>
-                      <PopupMenuEntry<Menu>>[
+                      <PopupMenuEntry<String>>[
                         PopupMenuItem(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => OptionOneScreen()));
-                          },
-                          value: Menu.itemOne,
+                          value: Menu[0],
                           child: Text('Progress'),
                         ),
                         PopupMenuItem(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => ReassignPage()));
-                          },
-                          value: Menu.itemTwo,
+                          onTap: () {},
+                          value: Menu[1],
                           child: Text('Reassign'),
                         ),
                         PopupMenuItem(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => ReassignPage()));
-                          },
-                          value: Menu.itemThree,
+                          value: Menu[2],
                           child: Text('Edit'),
                         ),
                       ]),
@@ -95,5 +103,3 @@ class _DetailsCardState extends State<DetailsCard> {
             ]));
   }
 }
-
-enum Menu { itemOne, itemTwo, itemThree, itemFour }
